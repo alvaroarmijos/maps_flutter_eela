@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       home: BlocProvider(
         lazy: false,
-        create: (context) => GpsBloc()..add(GpsInitialStatusEvent()),
+        create: (context) => GpsBloc()
+          ..add(GpsInitialStatusEvent())
+          ..add(ChangeGpsStatusEvent()),
         child: const GpsPage(),
       ),
     );

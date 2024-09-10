@@ -15,5 +15,17 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
         GpsState(isGpsEnable: gpsEnable),
       );
     });
+
+    on<ChangeGpsStatusEvent>((event, emit) async {
+      print('GpsInitialStatusEvent');
+
+      return emit.forEach(
+        Geolocator.getServiceStatusStream(),
+        onData: (status) {
+          final isGpsEnable = status == ServiceStatus.enabled;
+          return GpsState(isGpsEnable: isGpsEnable);
+        },
+      );
+    });
   }
 }
