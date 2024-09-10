@@ -7,7 +7,7 @@ class GpsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const showPermission = false;
+    const showPermission = true;
     return const Scaffold(
       body: showPermission ? PermissionsGps() : MessageGps(),
     );

@@ -7,8 +7,8 @@ plugins {
 
 android {
     namespace = "com.example.flutter_maps_eela"
-    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
