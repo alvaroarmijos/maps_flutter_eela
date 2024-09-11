@@ -10,6 +10,8 @@
         android:label="flutter_maps_eela"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="api-key-here"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
