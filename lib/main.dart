@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_maps_eela/packages/core/ui/theme.dart';
 import 'package:flutter_maps_eela/packages/features/gps/bloc/gps_bloc.dart';
 import 'package:flutter_maps_eela/packages/features/gps/pages/gps_page.dart';
+import 'package:flutter_maps_eela/packages/features/map/pages/map_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -19,8 +20,21 @@ class MyApp extends StatelessWidget {
         create: (context) => GpsBloc()
           ..add(GpsInitialStatusEvent())
           ..add(ChangeGpsStatusEvent()),
-        child: const GpsPage(),
+        child: const LoadingPage(),
       ),
+    );
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GpsBloc, GpsState>(
+      builder: (context, state) {
+        return state.isAllEnable ? const MapPage() : const GpsPage();
+      },
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_maps_eela/packages/features/gps/bloc/gps_bloc.dart';
 
 class PermissionsGps extends StatelessWidget {
   const PermissionsGps({super.key});
@@ -37,7 +39,9 @@ class PermissionsGps extends StatelessWidget {
               height: 32,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<GpsBloc>().add(AskLocationPermissionsEvent());
+              },
               child: const Text('Solicitar Permisos'),
             ),
           ],

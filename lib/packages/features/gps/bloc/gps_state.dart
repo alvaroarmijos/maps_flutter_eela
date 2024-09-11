@@ -8,4 +8,17 @@ class GpsState {
 
   final bool isGpsEnable;
   final bool isGpsPermissionsGranted;
+
+  bool get isAllEnable => isGpsEnable && isGpsPermissionsGranted;
+
+  GpsState copyWith({
+    bool? isGpsEnable,
+    bool? isGpsPermissionsGranted,
+  }) {
+    return GpsState(
+      isGpsEnable: isGpsEnable ?? this.isGpsEnable,
+      isGpsPermissionsGranted:
+          isGpsPermissionsGranted ?? this.isGpsPermissionsGranted,
+    );
+  }
 }
