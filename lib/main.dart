@@ -40,8 +40,9 @@ class LoadingPage extends StatelessWidget {
                 providers: [
                   BlocProvider(
                     lazy: false,
-                    create: (context) =>
-                        LocationBloc()..add(InitialLocationEvent()),
+                    create: (context) => LocationBloc()
+                      ..add(InitialLocationEvent())
+                      ..add(StartTrackingUserEvent()),
                   ),
                   BlocProvider(
                     create: (context) => MapCubit(),
