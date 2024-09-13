@@ -28,13 +28,18 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     return emit.forEach(
       Geolocator.getPositionStream(
           // Modificar de acuerdo a lo que se necesite
-          // locationSettings: LocationSettings(
-          //   distanceFilter: 100,
+          //   locationSettings: const LocationSettings(
+          // distanceFilter: 10,
           // )
           ),
       onData: (position) {
+        // newPosition
+        // [postion1, position2, position3]
+        final newLocation = LatLng(position.latitude, position.longitude);
+        final newHistory = [...state.myLocationHistory, newLocation];
         return state.copyWith(
-          lastKnownLocation: LatLng(position.latitude, position.longitude),
+          lastKnownLocation: newLocation,
+          myLocationHistory: newHistory,
         );
       },
     );
