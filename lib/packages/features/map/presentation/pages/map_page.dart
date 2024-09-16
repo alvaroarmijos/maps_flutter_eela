@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_maps_eela/packages/core/ui/ui.dart';
-import 'package:flutter_maps_eela/packages/features/map/blocs/location/location_bloc.dart';
-import 'package:flutter_maps_eela/packages/features/map/blocs/map/map_cubit.dart';
+import 'package:flutter_maps_eela/packages/features/map/presentation/blocs/location/location_bloc.dart';
+import 'package:flutter_maps_eela/packages/features/map/presentation/blocs/map/map_cubit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatelessWidget {
