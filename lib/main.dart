@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_maps_eela/packages/core/ui/theme.dart';
 import 'package:flutter_maps_eela/packages/features/gps/bloc/gps_bloc.dart';
 import 'package:flutter_maps_eela/packages/features/gps/pages/gps_page.dart';
+import 'package:flutter_maps_eela/packages/features/map/blocs/cubit/search_cubit.dart';
 import 'package:flutter_maps_eela/packages/features/map/blocs/location/location_bloc.dart';
 import 'package:flutter_maps_eela/packages/features/map/blocs/map/map_cubit.dart';
 import 'package:flutter_maps_eela/packages/features/map/pages/map_page.dart';
@@ -46,6 +47,9 @@ class LoadingPage extends StatelessWidget {
                   ),
                   BlocProvider(
                     create: (context) => MapCubit(),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchCubit(),
                   ),
                 ],
                 child: const MapPage(),

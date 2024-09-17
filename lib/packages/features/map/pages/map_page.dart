@@ -73,7 +73,7 @@ class MapPage extends StatelessWidget {
                         mapCubit.onMapInitialized(controller),
                   ),
                   const SearchBarInfo(),
-                  // const ManualMarker(),
+                  const ManualMarker(),
                 ],
               );
             },
