@@ -2,8 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_maps_eela/packages/features/gps/bloc/gps_bloc.dart';
 
-class PermissionsGps extends StatelessWidget {
+class PermissionsGps extends StatefulWidget {
   const PermissionsGps({super.key});
+
+  @override
+  State<PermissionsGps> createState() => _PermissionsGpsState();
+}
+
+class _PermissionsGpsState extends State<PermissionsGps> {
+  late final AppLifecycleListener _listener;
+
+  @override
+  void initState() {
+    super.initState();
+    _listener = AppLifecycleListener(
+      onResume: () => context.read<GpsBloc>().add(CheckPermissions()),
+    );
+  }
+
+  @override
+  void dispose() {
+    _listener.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -7,3 +7,5 @@ class GpsInitialStatusEvent extends GpsEvent {}
 class ChangeGpsStatusEvent extends GpsEvent {}
 
 class AskLocationPermissionsEvent extends GpsEvent {}
+
+class CheckPermissions extends GpsEvent {}
