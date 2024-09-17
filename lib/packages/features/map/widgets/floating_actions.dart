@@ -14,6 +14,7 @@ class FloatingActions extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         FloatingActionButton.small(
+          heroTag: UniqueKey(),
           onPressed: () {
             mapCubit.togglePolylineShown();
           },
@@ -26,6 +27,7 @@ class FloatingActions extends StatelessWidget {
           height: 8,
         ),
         FloatingActionButton.small(
+          heroTag: UniqueKey(),
           onPressed: () {
             final position =
                 context.read<LocationBloc>().state.lastKnownLocation;

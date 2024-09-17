@@ -40,7 +40,14 @@ class SearchIcon extends StatelessWidget {
       child: CircleAvatar(
         backgroundColor: Colors.white,
         child: IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            final result = await showSearch(
+              context: context,
+              delegate: SearchDestionationDelegate(),
+            );
+
+            if (result?.cancel == true) return;
+          },
           icon: Icon(
             Icons.search,
             color: AppColors.primary,
