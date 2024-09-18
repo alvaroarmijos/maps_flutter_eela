@@ -18,7 +18,7 @@ class MapPage extends StatelessWidget {
       body: BlocConsumer<LocationBloc, LocationState>(
         listener: (context, state) {
           if (state.lastKnownLocation != null) {
-            mapCubit.moveCamera(state.lastKnownLocation!);
+            // mapCubit.moveCamera(state.lastKnownLocation!);
           }
 
           if (state.myLocationHistory.isNotEmpty) {
@@ -71,6 +71,9 @@ class MapPage extends StatelessWidget {
                     polylines: polylines.values.toSet(),
                     onMapCreated: (controller) =>
                         mapCubit.onMapInitialized(controller),
+                    onCameraMove: (cameraPosition) {
+                      mapCubit.mapCenter = cameraPosition.target;
+                    },
                   ),
                   const SearchBarInfo(),
                   const ManualMarker(),

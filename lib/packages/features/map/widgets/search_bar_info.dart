@@ -56,7 +56,7 @@ class SearchIcon extends StatelessWidget {
             if (result?.cancel == true) return;
 
             if (result?.manual == true) {
-              context.read<SearchCubit>().updateShowManualMarker();
+              context.read<SearchCubit>().updateShowManualMarker(true);
             }
           },
           icon: Icon(

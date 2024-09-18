@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_maps_eela/packages/core/ui/colors.dart';
 import 'package:flutter_maps_eela/packages/features/map/blocs/cubit/search_cubit.dart';
+import 'package:flutter_maps_eela/packages/features/map/blocs/location/location_bloc.dart';
+import 'package:flutter_maps_eela/packages/features/map/blocs/map/map_cubit.dart';
 
 class ManualMarker extends StatelessWidget {
   const ManualMarker({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final searchCubit = context.read<SearchCubit>();
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         if (!state.showManualMarker) return const SizedBox();
@@ -17,7 +20,9 @@ class ManualMarker extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    searchCubit.updateShowManualMarker(false);
+                  },
                   icon: Icon(
                     Icons.arrow_back_ios,
                     color: AppColors.primary,
@@ -26,10 +31,13 @@ class ManualMarker extends StatelessWidget {
               ),
             ),
             Center(
-              child: Icon(
-                Icons.location_on_rounded,
-                size: 48,
-                color: AppColors.primary,
+              child: Transform.translate(
+                offset: const Offset(0, -22),
+                child: Icon(
+                  Icons.location_on_rounded,
+                  size: 48,
+                  color: AppColors.primary,
+                ),
               ),
             ),
             Align(
@@ -40,7 +48,15 @@ class ManualMarker extends StatelessWidget {
                   horizontal: 32,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final start =
+                        context.read<LocationBloc>().state.lastKnownLocation;
+                    if (start == null) return;
+
+                    final end = context.read<MapCubit>().mapCenter;
+                    if (end == null) return;
+                    searchCubit.getRoute(start, end);
+                  },
                   child: const Text('Confirmar'),
                 ),
               ),

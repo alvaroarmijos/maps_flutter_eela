@@ -8,6 +8,7 @@ class MapCubit extends Cubit<MapState> {
   MapCubit() : super(const MapState());
 
   GoogleMapController? _mapController;
+  LatLng? mapCenter;
 
   void onMapInitialized(GoogleMapController controller) {
     _mapController = controller;
