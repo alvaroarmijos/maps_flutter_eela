@@ -5,6 +5,8 @@ import 'package:flutter_maps_eela/packages/features/map/blocs/cubit/search_cubit
 import 'package:flutter_maps_eela/packages/features/map/blocs/location/location_bloc.dart';
 import 'package:flutter_maps_eela/packages/features/map/blocs/map/map_cubit.dart';
 
+import 'route_dialog.dart';
+
 class ManualMarker extends StatelessWidget {
   const ManualMarker({super.key});
 
@@ -13,7 +15,7 @@ class ManualMarker extends StatelessWidget {
     final searchCubit = context.read<SearchCubit>();
     return BlocConsumer<SearchCubit, SearchState>(
       listenWhen: (previous, current) =>
-          previous.route?.points?.length != current.route?.points?.length,
+          previous.isLoading != current.isLoading,
       listener: _listenerState,
       builder: (context, state) {
         if (!state.showManualMarker) return const SizedBox();
@@ -74,6 +76,12 @@ class ManualMarker extends StatelessWidget {
   void _listenerState(BuildContext context, SearchState state) {
     if (state.route != null && state.route!.points != null) {
       context.read<MapCubit>().addRoutePolyline(state.route!.points!);
+    }
+
+    if (state.isLoading) {
+      showLoadingMessage(context);
+    } else {
+      Navigator.maybePop(context);
     }
   }
 }

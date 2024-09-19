@@ -15,10 +15,11 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void getRoute(LatLng start, LatLng end) async {
+    emit(state.copyWith(isLoading: true));
     final route = await routeRepository.getRouteStartToEnd(start, end);
 
     if (route == null) return;
 
-    emit(state.copyWith(route: route));
+    emit(state.copyWith(route: route, isLoading: false));
   }
 }
