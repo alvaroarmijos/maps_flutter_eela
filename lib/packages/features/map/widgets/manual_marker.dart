@@ -11,7 +11,10 @@ class ManualMarker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchCubit = context.read<SearchCubit>();
-    return BlocBuilder<SearchCubit, SearchState>(
+    return BlocConsumer<SearchCubit, SearchState>(
+      listenWhen: (previous, current) =>
+          previous.route?.points?.length != current.route?.points?.length,
+      listener: _listenerState,
       builder: (context, state) {
         if (!state.showManualMarker) return const SizedBox();
         return Stack(
@@ -56,6 +59,7 @@ class ManualMarker extends StatelessWidget {
                     final end = context.read<MapCubit>().mapCenter;
                     if (end == null) return;
                     searchCubit.getRoute(start, end);
+                    searchCubit.updateShowManualMarker(false);
                   },
                   child: const Text('Confirmar'),
                 ),
@@ -65,5 +69,11 @@ class ManualMarker extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _listenerState(BuildContext context, SearchState state) {
+    if (state.route != null && state.route!.points != null) {
+      context.read<MapCubit>().addRoutePolyline(state.route!.points!);
+    }
   }
 }

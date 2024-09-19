@@ -1,23 +1,24 @@
 import 'dart:convert';
 
-Directions directionsFromJson(String str) =>
-    Directions.fromJson(json.decode(str));
+DirectionsDto directionsDtoFromJson(String str) =>
+    DirectionsDto.fromJson(json.decode(str));
 
-String directionsToJson(Directions data) => json.encode(data.toJson());
+String directionsDtoToJson(DirectionsDto data) => json.encode(data.toJson());
 
-class Directions {
-  final List<Route>? routes;
+class DirectionsDto {
+  final List<RouteDto>? routes;
   final String? uuid;
 
-  Directions({
+  DirectionsDto({
     this.routes,
     this.uuid,
   });
 
-  factory Directions.fromJson(Map<String, dynamic> json) => Directions(
+  factory DirectionsDto.fromJson(Map<String, dynamic> json) => DirectionsDto(
         routes: json["routes"] == null
             ? []
-            : List<Route>.from(json["routes"]!.map((x) => Route.fromJson(x))),
+            : List<RouteDto>.from(
+                json["routes"]!.map((x) => RouteDto.fromJson(x))),
         uuid: json["uuid"],
       );
 
@@ -29,18 +30,18 @@ class Directions {
       };
 }
 
-class Route {
+class RouteDto {
   final double? duration;
   final double? distance;
   final String? geometry;
 
-  Route({
+  RouteDto({
     this.duration,
     this.distance,
     this.geometry,
   });
 
-  factory Route.fromJson(Map<String, dynamic> json) => Route(
+  factory RouteDto.fromJson(Map<String, dynamic> json) => RouteDto(
         duration: json["duration"]?.toDouble(),
         distance: json["distance"]?.toDouble(),
         geometry: json["geometry"],

@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_maps_eela/packages/data/routes/domain/routes_repository.dart';
+import 'package:flutter_maps_eela/packages/data/routes/infrastructure/directions_dto.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
+import 'package:google_polyline_algorithm/google_polyline_algorithm.dart';
 
-import '../domain/directions.dart';
+import '../domain/routes.dart';
 
 class RoutesRepositoryImpl extends RoutesRepository {
   final Dio _dioDirections = Dio();
@@ -28,8 +30,21 @@ class RoutesRepositoryImpl extends RoutesRepository {
       },
     );
 
-    final data = Directions.fromJson(response.data);
+    final data = DirectionsDto.fromJson(response.data);
 
-    return data.routes?.first;
+    final numberPoints =
+        decodePolyline(data.routes?.first.geometry ?? '', accuracyExponent: 6);
+
+    final points = numberPoints
+        .map((coors) => LatLng(coors[0].toDouble(), coors[1].toDouble()))
+        .toList();
+
+    final route = Route(
+      duration: data.routes?.first.duration,
+      distance: data.routes?.first.distance,
+      points: points,
+    );
+
+    return route;
   }
 }

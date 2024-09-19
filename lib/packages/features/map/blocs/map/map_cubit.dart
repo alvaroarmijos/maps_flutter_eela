@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_maps_eela/packages/core/ui/colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -43,6 +44,33 @@ class MapCubit extends Cubit<MapState> {
     /// }
     final currentPolylines = Map<String, Polyline>.from(state.polylines);
     currentPolylines['myRoute'] = myRoute;
+
+    /// {
+    ///   myRoute: NewPolyline1,
+    ///   directions: Polyline2,
+    /// }
+    ///
+    emit(
+      state.copyWith(polylines: currentPolylines),
+    );
+  }
+
+  void addRoutePolyline(List<LatLng> points) {
+    final myRoute = Polyline(
+      polylineId: const PolylineId('direction'),
+      points: points,
+      color: Colors.black,
+      width: 5,
+      endCap: Cap.roundCap,
+      startCap: Cap.roundCap,
+    );
+
+    /// {
+    ///   myRoute: Polyline1,
+    ///   directions: Polyline2,
+    /// }
+    final currentPolylines = Map<String, Polyline>.from(state.polylines);
+    currentPolylines['direction'] = myRoute;
 
     /// {
     ///   myRoute: NewPolyline1,
