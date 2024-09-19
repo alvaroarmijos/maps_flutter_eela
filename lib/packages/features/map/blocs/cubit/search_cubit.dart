@@ -22,4 +22,8 @@ class SearchCubit extends Cubit<SearchState> {
 
     emit(state.copyWith(route: route, isLoading: false));
   }
+
+  void searchPlaces(LatLng proximity, String query) async {
+    final response = await routeRepository.searchPlaces(proximity, query);
+  }
 }

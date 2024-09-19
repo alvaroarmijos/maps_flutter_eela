@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_maps_eela/packages/core/ui/ui.dart';
+import 'package:flutter_maps_eela/packages/features/map/blocs/cubit/search_cubit.dart';
+import 'package:flutter_maps_eela/packages/features/map/blocs/location/location_bloc.dart';
 import 'package:flutter_maps_eela/packages/features/map/models/search_result.dart';
 
 class SearchDestionationDelegate extends SearchDelegate<SearchResult> {
@@ -32,6 +35,8 @@ class SearchDestionationDelegate extends SearchDelegate<SearchResult> {
 
   @override
   Widget buildResults(BuildContext context) {
+    final proximity = context.read<LocationBloc>().state.lastKnownLocation;
+    context.read<SearchCubit>().searchPlaces(proximity!, query);
     return const Text('buildResults');
   }
 

@@ -15,15 +15,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      theme: AppTheme.light,
-      home: BlocProvider(
-        lazy: false,
-        create: (context) => GpsBloc()
-          ..add(GpsInitialStatusEvent())
-          ..add(ChangeGpsStatusEvent()),
-        child: const LoadingPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          lazy: false,
+          create: (context) => GpsBloc()
+            ..add(GpsInitialStatusEvent())
+            ..add(ChangeGpsStatusEvent()),
+        ),
+        BlocProvider(
+          create: (context) => LocationBloc()
+            ..add(InitialLocationEvent())
+            ..add(StartTrackingUserEvent()),
+        ),
+        BlocProvider(
+          create: (context) => SearchCubit(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Material App',
+        theme: AppTheme.light,
+        home: const LoadingPage(),
       ),
     );
   }
@@ -40,16 +52,7 @@ class LoadingPage extends StatelessWidget {
             ? MultiBlocProvider(
                 providers: [
                   BlocProvider(
-                    lazy: false,
-                    create: (context) => LocationBloc()
-                      ..add(InitialLocationEvent())
-                      ..add(StartTrackingUserEvent()),
-                  ),
-                  BlocProvider(
                     create: (context) => MapCubit(),
-                  ),
-                  BlocProvider(
-                    create: (context) => SearchCubit(),
                   ),
                 ],
                 child: const MapPage(),

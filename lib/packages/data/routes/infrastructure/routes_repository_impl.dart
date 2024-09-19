@@ -6,9 +6,13 @@ import 'package:google_polyline_algorithm/google_polyline_algorithm.dart';
 
 import '../domain/routes.dart';
 
+const accessToken =
+    'pk.eyJ1IjoibGFsbzE1OTUiLCJhIjoiY2s4OHlqajE1MDFldDNlbzd5ZGtodnQycSJ9.vMDYnNVuC5gG4g1l9nD75w';
+
 class RoutesRepositoryImpl extends RoutesRepository {
   final Dio _dioDirections = Dio();
   final _baseDirectionsUrl = 'https://api.mapbox.com/directions/v5/mapbox';
+  final _baseGeocodingUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places';
 
   @override
   Future<Route?> getRouteStartToEnd(LatLng start, LatLng end) async {
@@ -25,8 +29,7 @@ class RoutesRepositoryImpl extends RoutesRepository {
         'geometries': 'polyline6',
         'overview': 'simplified',
         'steps': false,
-        'access_token':
-            'pk.eyJ1IjoibGFsbzE1OTUiLCJhIjoiY2s4OHlqajE1MDFldDNlbzd5ZGtodnQycSJ9.vMDYnNVuC5gG4g1l9nD75w'
+        'access_token': accessToken,
       },
     );
 
@@ -46,5 +49,18 @@ class RoutesRepositoryImpl extends RoutesRepository {
     );
 
     return route;
+  }
+
+  @override
+  Future<void> searchPlaces(LatLng proximity, String query) async {
+    final url = '$_baseGeocodingUrl/$query.json';
+
+    final response = await _dioDirections.get(url, queryParameters: {
+      'limit': 5,
+      'proximity': '${proximity.longitude},${proximity.latitude}',
+      'access_token': accessToken,
+    });
+
+    print(response.data);
   }
 }
