@@ -69,6 +69,7 @@ class MapPage extends StatelessWidget {
                       zoom: 18,
                     ),
                     polylines: polylines.values.toSet(),
+                    markers: mapState.markers.values.toSet(),
                     onMapCreated: (controller) =>
                         mapCubit.onMapInitialized(controller),
                     onCameraMove: (cameraPosition) {

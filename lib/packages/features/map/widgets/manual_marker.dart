@@ -75,7 +75,7 @@ class ManualMarker extends StatelessWidget {
 
   void _listenerState(BuildContext context, SearchState state) {
     if (state.route != null && state.route!.points != null) {
-      context.read<MapCubit>().addRoutePolyline(state.route!.points!);
+      context.read<MapCubit>().addRoutePolyline(state.route!);
     }
 
     if (state.isLoading) {

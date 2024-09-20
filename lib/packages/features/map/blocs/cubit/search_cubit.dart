@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_maps_eela/packages/data/routes/domain/places.dart';
 import 'package:flutter_maps_eela/packages/data/routes/domain/routes.dart';
 import 'package:flutter_maps_eela/packages/data/routes/infrastructure/routes_repository_impl.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,5 +26,6 @@ class SearchCubit extends Cubit<SearchState> {
 
   void searchPlaces(LatLng proximity, String query) async {
     final response = await routeRepository.searchPlaces(proximity, query);
+    emit(state.copyWith(places: response));
   }
 }

@@ -37,7 +37,30 @@ class SearchDestionationDelegate extends SearchDelegate<SearchResult> {
   Widget buildResults(BuildContext context) {
     final proximity = context.read<LocationBloc>().state.lastKnownLocation;
     context.read<SearchCubit>().searchPlaces(proximity!, query);
-    return const Text('buildResults');
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        final places = state.places;
+
+        return ListView.builder(
+          itemCount: places.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(places[index].text ?? ''),
+              subtitle: Text(places[index].placeName ?? ''),
+              leading: Icon(
+                Icons.location_on_outlined,
+                color: AppColors.primary,
+              ),
+              onTap: () {
+                final searchResult = SearchResult(
+                    cancel: false, manual: false, place: places[index]);
+                close(context, searchResult);
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   @override

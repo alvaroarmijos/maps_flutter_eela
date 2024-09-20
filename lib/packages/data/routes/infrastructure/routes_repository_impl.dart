@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_maps_eela/packages/data/routes/domain/places.dart';
 import 'package:flutter_maps_eela/packages/data/routes/domain/routes_repository.dart';
 import 'package:flutter_maps_eela/packages/data/routes/infrastructure/directions_dto.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
@@ -52,7 +53,7 @@ class RoutesRepositoryImpl extends RoutesRepository {
   }
 
   @override
-  Future<void> searchPlaces(LatLng proximity, String query) async {
+  Future<List<Place>?> searchPlaces(LatLng proximity, String query) async {
     final url = '$_baseGeocodingUrl/$query.json';
 
     final response = await _dioDirections.get(url, queryParameters: {
@@ -61,6 +62,7 @@ class RoutesRepositoryImpl extends RoutesRepository {
       'access_token': accessToken,
     });
 
-    print(response.data);
+    final data = Places.fromJson(response.data);
+    return data.features;
   }
 }
