@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_maps_eela/packages/core/ui/markers/widget_to_markers.dart';
 import 'package:flutter_maps_eela/packages/core/ui/ui.dart';
 import 'package:flutter_maps_eela/packages/data/routes/domain/routes.dart'
     as route;
@@ -75,6 +76,7 @@ class MapCubit extends Cubit<MapState> {
 
     final startAssetsIcon = await getAssetImageMarker();
     final endNetworkIcon = await getNetworkImageMarker();
+    final startUberMarker = await getStartUberMarker(time.toString());
 
     // Google Map Markers
     // Default marker
@@ -87,11 +89,23 @@ class MapCubit extends Cubit<MapState> {
     //   ),
     // );
 
-    // Asset marker
+    // // Asset marker
+    // final startMarker = Marker(
+    //   markerId: const MarkerId('start'),
+    //   position: route.points!.first,
+    //   icon: startAssetsIcon,
+    //   infoWindow: InfoWindow(
+    //     title: 'Punto de inicio',
+    //     snippet: 'km $distanceKm',
+    //   ),
+    // );
+
+    // Custom marker
     final startMarker = Marker(
       markerId: const MarkerId('start'),
       position: route.points!.first,
-      icon: startAssetsIcon,
+      icon: startUberMarker,
+      anchor: const Offset(0, 0.9),
       infoWindow: InfoWindow(
         title: 'Punto de inicio',
         snippet: 'km $distanceKm',
